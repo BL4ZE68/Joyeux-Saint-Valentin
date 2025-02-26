@@ -1,0 +1,348 @@
+:root {
+    --primary-color: #ff3f6d;
+    --secondary-color: #ff87a2;
+    --background-color: #ffebf0;
+    --text-color: #333;
+    --box-shadow: 0 0 20px rgba(255, 63, 109, 0.2);
+    --transition-speed: 0.3s;
+    --heart-size: 100px;
+    --font-cursive: 'Dancing Script', cursive;
+    --font-main: 'Poppins', sans-serif;
+}
+
+/* Theme sombre */
+[data-theme="dark"] {
+    --background-color: #2a0a1b;
+    --text-color: #fff;
+    --primary-color: #ff6b91;
+    --secondary-color: #ff9fb8;
+    --box-shadow: 0 0 20px rgba(255, 107, 145, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--background-color);
+    font-family: var(--font-main);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color var(--transition-speed);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Cœur principal */
+.heart {
+    position: relative;
+    width: var(--heart-size);
+    height: calc(var(--heart-size) * 0.9);
+    animation: battement 1.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 3rem auto;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--heart-size) * 0.5);
+    top: 0;
+    width: calc(var(--heart-size) * 0.5);
+    height: calc(var(--heart-size) * 0.8);
+    background: var(--primary-color);
+    border-radius: 50px 50px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+    transition: background-color var(--transition-speed);
+}
+
+.heart::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+/* Titres et textes */
+h1, h2 {
+    font-family: var(--font-cursive);
+    margin: 2rem 0;
+    color: var(--primary-color);
+}
+
+h1 {
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Boîtes de messages */
+.message-box {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+    margin: 1.5rem 0;
+    transition: all var(--transition-speed);
+    position: relative;
+    overflow: hidden;
+}
+
+.message-box:hover {
+    transform: translateY(-5px);
+}
+
+/* Lettre d'amour */
+#loveLetter {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    text-align: left;
+    font-family: var(--font-cursive);
+}
+
+#loveLetter.visible {
+    opacity: 1;
+}
+
+.letter-content {
+    margin: 2rem 0;
+    padding: 0 1rem;
+}
+
+.signature {
+    text-align: right;
+    font-style: italic;
+    margin-top: 2rem;
+}
+
+/* Bouton */
+button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 63, 109, 0.3);
+}
+
+/* Galerie photos */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.gallery img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    box-shadow: var(--box-shadow);
+}
+
+.gallery img:hover {
+    transform: scale(1.5);
+    filter: brightness(1.2);
+    z-index: 2;
+}
+
+/* Contrôles de la playlist */
+.playlist-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.playlist-controls button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    box-shadow: none;
+}
+
+.song-info {
+    margin: 0 1rem;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.1s linear;
+}
+
+/* Effets visuels */
+.heart-rain {
+    position: fixed;
+    top: -20px;
+    font-size: 20px;
+    animation: rain linear infinite;
+    color: var(--primary-color);
+    z-index: -1;
+    opacity: 0.6;
+    user-select: none;
+}
+
+.particle {
+    position: fixed;
+    pointer-events: none;
+    background: var(--primary-color);
+    border-radius: 50%;
+    mix-blend-mode: screen;
+}
+
+/* Switch thème */
+.theme-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    transition: all var(--transition-speed);
+    font-size: 1.2rem;
+}
+
+.theme-switch:hover {
+    transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes battement {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+@keyframes rain {
+    0% { transform: translateY(-20px) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.typing-text {
+    display: inline-block;
+    overflow: hidden;
+    border-right: 2px solid var(--primary-color);
+    white-space: nowrap;
+    margin: 0 auto;
+    animation: 
+        typing 3.5s steps(40, end),
+        blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary-color); }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    :root {
+        --heart-size: 80px;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .message-box {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+
+    .playlist-controls {
+        padding: 0.8rem;
+        width: 90%;
+    }
+
+    .progress-bar {
+        width: 100px;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .gallery img:hover {
+        transform: scale(1.2);
+    }
+}
+
+/* Accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

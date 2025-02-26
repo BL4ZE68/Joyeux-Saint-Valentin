@@ -1,0 +1,39 @@
+# Système d'exploitation
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs de code
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Fichiers temporaires
+*.tmp
+*.temp
+*.log
+
+# Fichiers de configuration personnels
+*.env
+*.env.local
+
+# Dossiers de dépendances
+node_modules/
+vendor/
+
+# Fichiers de build
+dist/
+build/
+out/
+
+# Fichiers média (à gérer séparément si nécessaire)
+*.mp3
+*.wav
+*.mp4
+*.mov
+
+# Fichiers de sauvegarde
+*~
+*.bak
+*.swp

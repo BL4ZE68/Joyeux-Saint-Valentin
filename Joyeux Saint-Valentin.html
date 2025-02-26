@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Une carte de Saint-Valentin spéciale pour Aya">
+    <meta name="theme-color" content="#ff3f6d">
+    <title>Joyeux Saint-Valentin ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-switch" role="button" aria-label="Changer le thème">🌙</div>
+    
+    <main class="container">
+        <div class="heart" role="img" aria-label="Cœur animé"></div>
+        
+        <h1 class="typing-text">Mon Amour pour toi 💖</h1>
+        
+        <section class="message-box">
+            <p id="dynamicDate" aria-live="polite">Chargement du compte à rebours...</p>
+            <button id="revealBtn" onclick="loveLetterManager.reveal()" aria-expanded="false" aria-controls="loveLetter">
+                Ouvre mon cœur ❤️
+                <span class="button-particles"></span>
+            </button>
+            
+            <article id="loveLetter" class="hidden" aria-hidden="true">
+                <p class="typing-text"><strong>Chère Aya,</strong></p>
+                <div class="letter-content">
+                    <p>
+                    À Toi, Mon Amour <br><br>
+                    En ce jour de doux Saint-Valentin,<br>
+                    Je prends ma plume, le cœur serein.<br>
+                    Pour toi, lumière de mes jours,<br>
+                    Ma plus belle étoile, mon seul amour.<br><br>
+                    
+                    Tes yeux scintillent comme l'aurore,<br>
+                    Un éclat pur que rien n'ignore.<br>
+                    Ton rire danse au vent léger,<br>
+                    Mélodie douce à savourer.<br><br>
+                    
+                    Tes mains sur moi, brise divine,<br>
+                    Caressent mon âme et l'illuminent.<br>
+                    Chaque instant à tes côtés,<br>
+                    Est un rêve que je veux garder.<br><br>
+                    
+                    Dans le silence des étoiles filantes,<br>
+                    Nos cœurs ont tissé des liens ardents.<br>
+                    L'hiver s'efface sous ton sourire,<br>
+                    Le printemps naît dans tes yeux brillants.<br><br>
+                    
+                    Tes mains, douces plumes sur mon visage,<br>
+                    Apaisent les ombres, écrivent un message.<br>
+                    Ton rire est un ruisseau qui chante et danse,<br>
+                    Inondant de joie chaque parcelle de l'absence.<br><br>
+                    
+                    Chaque mot murmuré est une promesse ancienne,<br>
+                    Une mélodie secrète où notre histoire s'enchaîne.<br>
+                    J'écrirai ton nom sur l'écorce du temps,<br>
+                    Dans l'arbre géant où nos rêves s'étendent.<br><br>
+                    
+                    Mon amour, prends ces vers en offrande,<br>
+                    Fragments d'un feu que rien ne commande.<br>
+                    En ce jour des amants, sous la lune complice,<br>
+                    Je te donne mon souffle, mon sang, mon calice.<br><br>
+                    
+                    Car tu es la note à mon nocturne,<br>
+                    L'aube qui persiste, l'éternel murmure.<br>
+                    Et si les galaxies venaient à se taire,<br>
+                    Ton nom danserait encore sur mes lèvres sincères.<br><br>
+                    
+                    Que ce poème soit le reflet,<br>
+                    De tout l'amour que je te promets.<br>
+                    Aujourd'hui, demain, pour l'éternité,<br>
+                    Toi et moi, à jamais liés.</p>
+                </div>
+                <p class="signature">Avec tout mon amour 🌹,<br>
+                    <strong>Estelle</strong>
+                </p>
+            </article>
+        </section>
+
+        <section class="message-box gallery-section">
+            <h2>Notre Album Numérique</h2>
+            <div id="photoGallery" class="gallery" role="region" aria-label="Galerie de photos">
+                <!-- Les photos seront ajoutées par JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <div class="playlist-controls">
+        <button id="prevSong" aria-label="Chanson précédente">⏮️</button>
+        <button id="playPause" aria-label="Lecture/Pause">⏯️</button>
+        <button id="nextSong" aria-label="Chanson suivante">⏭️</button>
+        <div class="song-info">
+            <p id="currentSong">Slimane - Des milliers de Je t'aime</p>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="particles"></div>
+    <div id="heart-rain"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
