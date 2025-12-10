@@ -1,4 +1,4 @@
-// Configuration
+
 const CONFIG = {
     valentineDate: new Date("February 14, 2025 00:00:00"),
     confettiCount: 50,
@@ -36,7 +36,18 @@ class ThemeManager {
     }
 
     init() {
-        this.themeSwitch.addEventListener('click', () => this.toggleTheme());
+        if (this.themeSwitch) {
+            // Make sure it's keyboard focusable
+            if (!this.themeSwitch.hasAttribute('tabindex')) this.themeSwitch.setAttribute('tabindex', '0');
+            this.themeSwitch.addEventListener('click', () => this.toggleTheme());
+            this.themeSwitch.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.toggleTheme();
+                }
+            });
+        }
+
         // Vérifier la préférence système
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             this.toggleTheme();
@@ -81,8 +92,14 @@ class LoveLetterManager {
         this.letter = document.getElementById('loveLetter');
         this.button = document.getElementById('revealBtn');
         this.isRevealed = false;
+        this._boundReveal = () => this.reveal();
+        this._handleKey = (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.reveal();
+            }
+        };
     }
-
     reveal() {
         if (this.isRevealed) return;
         
@@ -106,62 +123,104 @@ class LoveLetterManager {
         this.button.setAttribute('aria-expanded', 'true');
     }
 
+    // Attach accessible event handlers (click + keyboard)
+    attachHandlers() {
+        if (!this.button) return;
+        this.button.addEventListener('click', this._boundReveal);
+        this.button.addEventListener('keydown', this._handleKey);
+    }
+
     startHeartRain() {
         const container = document.getElementById('heart-rain');
-        
+        if (!container) return;
+
+        // Prevent multiple intervals
+        if (this.heartInterval) return;
+
         const createHeart = () => {
             const heart = document.createElement('div');
             heart.className = 'heart-rain';
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            const duration = (Math.random() * 3 + 2);
+            heart.style.animationDuration = duration + 's';
             container.appendChild(heart);
 
-            heart.addEventListener('animationend', () => heart.remove());
+            // Ensure removal in case animationend doesn't fire
+            const removeTimeout = setTimeout(() => {
+                if (heart.parentNode) heart.remove();
+            }, (duration + 1) * 1000);
+
+            heart.addEventListener('animationend', () => {
+                clearTimeout(removeTimeout);
+                heart.remove();
+            });
         };
 
-        setInterval(createHeart, 300);
+        // Spawn less frequently for performance
+        this.heartInterval = setInterval(createHeart, 700);
     }
 
     startParticleEffect() {
         const container = document.getElementById('particles');
+        if (!container) return;
+
+        if (this._particleInitialized) return;
+        this._particleInitialized = true;
+
         const particles = [];
 
         const createParticle = (x, y) => {
+            if (particles.length >= CONFIG.particleCount) return;
+
             const particle = document.createElement('div');
             particle.className = 'particle';
-            particle.style.width = particle.style.height = Math.random() * 6 + 4 + 'px';
+            const size = Math.random() * 6 + 4;
+            particle.style.width = particle.style.height = size + 'px';
             particle.style.left = x + 'px';
             particle.style.top = y + 'px';
             container.appendChild(particle);
-            particles.push({
+
+            const obj = {
                 element: particle,
                 x: x,
                 y: y,
                 speedX: Math.random() * 4 - 2,
-                speedY: Math.random() * 4 - 2
-            });
+                speedY: Math.random() * 4 - 2,
+                createdAt: Date.now()
+            };
+            particles.push(obj);
+
+            // Ensure particle is removed after a short lifetime
+            setTimeout(() => {
+                if (obj.element.parentNode) obj.element.remove();
+                const idx = particles.indexOf(obj);
+                if (idx > -1) particles.splice(idx, 1);
+            }, 4000);
         };
 
-        document.addEventListener('mousemove', (e) => {
+        const mouseHandler = (e) => {
             if (particles.length < CONFIG.particleCount) {
                 createParticle(e.clientX, e.clientY);
             }
-        });
+        };
+
+        document.addEventListener('mousemove', mouseHandler);
 
         setInterval(() => {
-            particles.forEach((particle, index) => {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const particle = particles[i];
                 particle.x += particle.speedX;
                 particle.y += particle.speedY;
                 particle.element.style.left = particle.x + 'px';
                 particle.element.style.top = particle.y + 'px';
 
-                if (particle.x < 0 || particle.x > window.innerWidth || 
-                    particle.y < 0 || particle.y > window.innerHeight) {
-                    particle.element.remove();
-                    particles.splice(index, 1);
+                if (particle.x < -50 || particle.x > window.innerWidth + 50 ||
+                    particle.y < -50 || particle.y > window.innerHeight + 50) {
+                    if (particle.element.parentNode) particle.element.remove();
+                    particles.splice(i, 1);
                 }
-            });
+            }
         }, 16);
     }
 }
@@ -181,6 +240,9 @@ class PlaylistManager {
         this.nextBtn = document.getElementById('nextSong');
         this.songInfo = document.getElementById('currentSong');
         this.progress = document.querySelector('.progress');
+
+        // Accessibility: expose pressed state
+        if (this.playPauseBtn) this.playPauseBtn.setAttribute('aria-pressed', String(this.isPlaying));
 
         this.playPauseBtn.addEventListener('click', () => this.togglePlay());
         this.prevBtn.addEventListener('click', () => this.previousTrack());
@@ -240,6 +302,7 @@ class PlaylistManager {
 
     updatePlayPauseButton() {
         this.playPauseBtn.textContent = this.isPlaying ? '⏸️' : '▶️';
+        if (this.playPauseBtn) this.playPauseBtn.setAttribute('aria-pressed', String(this.isPlaying));
     }
 }
 
@@ -256,8 +319,15 @@ class PhotoGalleryManager {
             img.src = photo.src;
             img.alt = photo.alt;
             img.loading = 'lazy';
-            
+            // Make images keyboard accessible
+            img.tabIndex = 0;
             img.addEventListener('click', () => this.toggleZoom(img));
+            img.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.toggleZoom(img);
+                }
+            });
             this.gallery.appendChild(img);
         });
     }
@@ -274,6 +344,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.themeManager = new ThemeManager();
     window.countdownManager = new CountdownManager();
     window.loveLetterManager = new LoveLetterManager();
+    // Attach accessible handlers for the reveal button
+    if (window.loveLetterManager && typeof window.loveLetterManager.attachHandlers === 'function') {
+        window.loveLetterManager.attachHandlers();
+    }
     window.playlistManager = new PlaylistManager();
     window.galleryManager = new PhotoGalleryManager();
 });

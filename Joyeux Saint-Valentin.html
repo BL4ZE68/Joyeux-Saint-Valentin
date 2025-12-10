@@ -11,16 +11,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="theme-switch" role="button" aria-label="Changer le thème">🌙</div>
+    <a class="skip-link" href="#mainContent">Aller au contenu</a>
+    <noscript>
+        JavaScript est nécessaire pour afficher correctement cette page. Activez JavaScript dans votre navigateur.
+    </noscript>
+    <div class="theme-switch" role="button" aria-label="Changer le thème" tabindex="0">🌙</div>
     
-    <main class="container">
+    <main id="mainContent" class="container" role="main">
         <div class="heart" role="img" aria-label="Cœur animé"></div>
         
         <h1 class="typing-text">Mon Amour pour toi 💖</h1>
         
         <section class="message-box">
             <p id="dynamicDate" aria-live="polite">Chargement du compte à rebours...</p>
-            <button id="revealBtn" onclick="loveLetterManager.reveal()" aria-expanded="false" aria-controls="loveLetter">
+            <button id="revealBtn" aria-expanded="false" aria-controls="loveLetter">
                 Ouvre mon cœur ❤️
                 <span class="button-particles"></span>
             </button>
@@ -104,6 +108,6 @@
     <div id="particles"></div>
     <div id="heart-rain"></div>
 
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
 </body>
 </html>

@@ -346,3 +346,31 @@ button:focus {
         scroll-behavior: auto !important;
     }
 }
+
+/* Skip link (accessible) */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+.skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 6px;
+    z-index: 2000;
+    text-decoration: none;
+}
+
+/* Make theme-switch focus visible (it's a div with role=button) */
+.theme-switch:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 63, 109, 0.3);
+}
