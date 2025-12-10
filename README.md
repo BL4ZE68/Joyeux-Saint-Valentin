@@ -21,7 +21,7 @@ Une carte de Saint-Valentin numérique et interactive créée avec amour pour Ay
 
 ## Structure des Fichiers 📁
 
-```
+```plaintext
 .
 ├── index.html
 ├── style.css
