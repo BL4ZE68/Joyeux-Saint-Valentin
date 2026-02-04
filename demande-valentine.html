@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Une demande de Saint-Valentin simple et élégante.">
+  <title>Veux-tu être ma Valentine ? 💌</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --rose-100: #fff0f5;
+      --rose-300: #ff9eb6;
+      --rose-500: #ff5f87;
+      --rose-700: #d93d63;
+      --ink: #3a1f2b;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, var(--rose-100), #ffe3ec 45%, #ffd1df 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      max-width: 680px;
+      width: 100%;
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(217, 61, 99, 0.2);
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before,
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      background: rgba(255, 95, 135, 0.15);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .card::before {
+      top: -40px;
+      left: -40px;
+    }
+
+    .card::after {
+      bottom: -50px;
+      right: -30px;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-family: "Dancing Script", "Segoe Script", cursive;
+      font-size: clamp(2.2rem, 3vw, 3rem);
+      margin-bottom: 12px;
+      color: var(--rose-700);
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin: 12px 0;
+    }
+
+    .highlight {
+      font-weight: 600;
+      color: var(--rose-700);
+    }
+
+    .question {
+      font-size: 1.35rem;
+      margin: 24px 0 12px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    button {
+      border: none;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:focus-visible {
+      outline: 3px solid rgba(217, 61, 99, 0.4);
+      outline-offset: 3px;
+    }
+
+    .yes {
+      background: var(--rose-500);
+      color: var(--white);
+      box-shadow: 0 12px 24px rgba(255, 95, 135, 0.35);
+    }
+
+    .no {
+      background: transparent;
+      color: var(--rose-700);
+      border: 2px solid var(--rose-300);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .response {
+      margin-top: 24px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--rose-700);
+      min-height: 1.5em;
+    }
+
+    .signature {
+      margin-top: 28px;
+      font-style: italic;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 28px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main class="card" role="main">
+    <div class="content">
+      <h1>Une petite question pour toi ✨</h1>
+      <p>
+        Depuis que je t'ai rencontrée, tout semble un peu plus doux.
+        J'adore nos moments partagés, ton sourire, et cette énergie qui me fait
+        penser que chaque jour peut être spécial.
+      </p>
+      <p class="highlight">
+        Alors voilà, je voulais te demander quelque chose d'important.
+      </p>
+      <p class="question">Veux-tu être ma Valentine ? 💖</p>
+
+      <div class="buttons">
+        <button class="yes" type="button" data-response="yes">Oui, avec plaisir !</button>
+        <button class="no" type="button" data-response="no">Je suis touchée 💗</button>
+      </div>
+
+      <div class="response" id="response" aria-live="polite"></div>
+
+      <p class="signature">Avec tendresse,<br><strong>Ton admirateur</strong></p>
+    </div>
+  </main>
+
+  <script>
+    const response = document.getElementById("response");
+    const messages = {
+      yes: "Tu viens de rendre ma journée magique ! 🌹",
+      no: "Merci de ta sincérité. Tu restes quelqu'un de précieux. 💫",
+    };
+
+    document.querySelectorAll("button[data-response]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.dataset.response;
+        response.textContent = messages[key] || "";
+      });
+    });
+  </script>
+</body>
+</html>
